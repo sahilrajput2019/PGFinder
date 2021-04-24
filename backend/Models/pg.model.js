@@ -1,4 +1,4 @@
-const mongoose = require(mongoose);
+const mongoose = require('mongoose');
 
 const PgSchema = mongoose.Schema({
   city: {
@@ -28,9 +28,6 @@ const PgSchema = mongoose.Schema({
   timings: {
     type: String,
     required: true,
-  },
-  ratings: {
-    type: Number,
   },
   author: {
     id: {

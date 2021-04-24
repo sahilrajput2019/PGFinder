@@ -23,6 +23,16 @@ connection.once("open", () => {
   console.log("Database Connection establsihed Successfully");
 });
 
+const router = require('./Router/router');
+const authUserRouter = require('./Router/authUser/auth');
+const authOwnerRouter = require('./Router/authOwner/auth');
+
+app.use(router);
+
+//for authentication routes 
+app.get("/apiUser/", authUserRouter);
+app.get("/apiOwner/", authOwnerRouter);
+
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () =>
