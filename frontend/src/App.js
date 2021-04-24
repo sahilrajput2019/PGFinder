@@ -9,7 +9,7 @@ const App = () => {
       <Navigation />
       <Body />
       <Switch>
-        <Route exact path="/" component={Main} />
+        {/* <Route exact path="/" component={Main} />
         <Route path="/register" component={Register} />
         <Route path="/users/activate/:token" component={UserActivate} />
         <Route path="/owner/activate/:token" component={OwnerActivate} />
@@ -17,7 +17,7 @@ const App = () => {
         <Route path="/users/password/forget" component={UserForgotPassword} />
         <Route path="/users/password/reset/:token" component={UserReset} />
         <Route path="/owner/password/forget" component={OwnerForgotPassword} />
-        <Route path="/owner/password/reset/:token" component={OwnerReset} />
+        <Route path="/owner/password/reset/:token" component={OwnerReset} /> */}
       </Switch>
     </React.Fragment>
   );
