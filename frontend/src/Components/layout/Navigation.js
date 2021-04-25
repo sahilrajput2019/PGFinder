@@ -8,12 +8,14 @@ import {
   Nav,
   NavDropdown,
 } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 const Navigation = () => {
+  const history = useHistory();
   return (
     <>
       <Navbar bg="dark" expand="lg" varirant="dark">
-      <Button variant="light" size="lg" >PGFinder</Button>
+      <Button variant="light" size="lg" onClick={() => {history.push("/");}}>PGFinder</Button>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
@@ -26,7 +28,7 @@ const Navigation = () => {
               <Button variant="outline-light">Search</Button>
             </Form>
             <div className="pl-2">
-            <Button variant="light">Login</Button>
+            <Button variant="light" onClick={() => {history.push("/login");}} >Login</Button>
             </div>
           </Nav>
         </Navbar.Collapse>
