@@ -137,14 +137,14 @@ exports.loginController = (req, res)  => {
     // check if owner exist
     Owner.findOne({
       email,
-    }).exec((err, owner) => {
-      if (err || !owner) {
+    }).exec((err, user) => {
+      if (err || !user) {
         return res.status(400).json({
           errors: "Owner with that email does not exist. Please signup",
         });
       }
       // authenticate
-      if (!owner.authenticate(password)) {
+      if (!user.authenticate(password)) {
         return res.status(400).json({
           errors: "Email and password do not match",
         });
@@ -152,22 +152,22 @@ exports.loginController = (req, res)  => {
       // generate a token and send to client
       const token = jwt.sign(
         {
-          _id: owner._id,
+          _id: user._id,
         },
         process.env.JWT_SECRET,
         {
           expiresIn: "30d",
         }
       );
-      const { _id, name, email, role } = owner;
-
+      const { _id, name, email } = user;
+      console.log("1) ", user);
+      console.log("2) ", name, email);
       return res.json({
         token,
-        owner: {
+        user: {
           _id,
           name,
           email,
-          role,
         },
       });
     });
