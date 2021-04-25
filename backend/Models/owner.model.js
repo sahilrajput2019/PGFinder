@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const OwnerSchema = mongoose.Schema({
   name: {
     type: String,
-    trim : true,
+    trim: true,
     require: true,
   },
   email: {
@@ -31,8 +31,7 @@ const OwnerSchema = mongoose.Schema({
   ],
 });
 
-OwnerSchema
-  .virtual("password")
+OwnerSchema.virtual("password")
   .set(function (password) {
     this._password = password;
     this.salt = this.makeSalt();
@@ -51,11 +50,13 @@ OwnerSchema.methods = {
   encryptPassword: function (password) {
     if (!password) return "";
     try {
-      return crypto
-      // Creates a Hmac(Hashed based message authentication code) object using the specified algorithm and key
-        .createHmac("sha1", this.salt)
-        .update(password)
-        .digest("hex");
+      return (
+        crypto
+          // Creates a Hmac(Hashed based message authentication code) object using the specified algorithm and key
+          .createHmac("sha1", this.salt)
+          .update(password)
+          .digest("hex")
+      );
     } catch (err) {
       return "";
     }
@@ -65,7 +66,6 @@ OwnerSchema.methods = {
     return Math.round(new Date().valueOf() * Math.random()) + "";
   },
 };
-
 
 const Owner = mongoose.model("Owner", OwnerSchema);
 module.exports = Owner;

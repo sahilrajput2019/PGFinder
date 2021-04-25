@@ -1,4 +1,4 @@
-const User = require("../../Models/user.model.js");
+const Owner = require("../../Models/owner.model.js");
 const expressJwt  = require("express-jwt");
 const _ = require("lodash");
 
@@ -24,7 +24,7 @@ exports.registerController = (req, res) => {
       errors: firstError
     });
   } else {
-    User.findOne({
+    Owner.findOne({
       email
     }).exec((err, user) => {
       if (user) {
@@ -49,8 +49,7 @@ exports.registerController = (req, res) => {
     );
 
     
-    console.log("Value of Flag Again is " + flag);
-    if(flag != 0){
+
       const emailData = {
         from: process.env.EMAIL_FROM,
         to: email,
@@ -77,7 +76,7 @@ exports.registerController = (req, res) => {
             errors: errorHandler(err)
           });
         });
-    }
+    
     
   }
 };
@@ -95,15 +94,16 @@ exports.activationController  = (req, res) => {
       } else {
         const { name, email, password } = jwt.decode(token);
 
-        console.log(email);
-        const user = new User({
+        console.log(name, email, password);
+        const owner = new Owner({
           name,
           email,
           password,
         });
 
-        user.save((err, user) => {
+        owner.save((err, owner) => {
           if (err) {
+            console.log(err);
             console.log("Save error", errorHandler(err));
             return res.status(401).json({
               errors: errorHandler(err),
@@ -111,7 +111,7 @@ exports.activationController  = (req, res) => {
           } else {
             return res.json({
               success: true,
-              message: user,
+              message: owner,
               message: "Signup success",
             });
           }
@@ -134,17 +134,17 @@ exports.loginController = (req, res)  => {
       errors: firstError,
     });
   } else {
-    // check if user exist
-    User.findOne({
+    // check if owner exist
+    Owner.findOne({
       email,
-    }).exec((err, user) => {
-      if (err || !user) {
+    }).exec((err, owner) => {
+      if (err || !owner) {
         return res.status(400).json({
-          errors: "User with that email does not exist. Please signup",
+          errors: "Owner with that email does not exist. Please signup",
         });
       }
       // authenticate
-      if (!user.authenticate(password)) {
+      if (!owner.authenticate(password)) {
         return res.status(400).json({
           errors: "Email and password do not match",
         });
@@ -152,18 +152,18 @@ exports.loginController = (req, res)  => {
       // generate a token and send to client
       const token = jwt.sign(
         {
-          _id: user._id,
+          _id: owner._id,
         },
         process.env.JWT_SECRET,
         {
           expiresIn: "30d",
         }
       );
-      const { _id, name, email, role } = user;
+      const { _id, name, email, role } = owner;
 
       return res.json({
         token,
-        user: {
+        owner: {
           _id,
           name,
           email,
@@ -184,20 +184,20 @@ exports.forgotPasswordController = (req, res) => {
       errors: firstError,
     });
   } else {
-    User.findOne(
+    Owner.findOne(
       {
         email,
       },
-      (err, user) => {
-        if (err || !user) {
+      (err, owner) => {
+        if (err || !owner) {
           return res.status(400).json({
-            error: "User with that email does not exist",
+            error: "Owner with that email does not exist",
           });
         }
 
         const token = jwt.sign(
           {
-            _id: user._id,
+            _id: owner._id,
           },
           process.env.JWT_RESET_PASSWORD,
           {
@@ -218,7 +218,7 @@ exports.forgotPasswordController = (req, res) => {
                 `,
         };
 
-        return user.updateOne(
+        return owner.updateOne(
           {
             resetPasswordLink: token,
           },
@@ -227,7 +227,7 @@ exports.forgotPasswordController = (req, res) => {
               console.log("RESET PASSWORD LINK ERROR", err);
               return res.status(400).json({
                 error:
-                  "Database connection error on user password forgot request",
+                  "Database connection error on Owner password forgot request",
               });
             } else {
               sgMail
@@ -274,12 +274,12 @@ exports.resetPasswordController = (req, res) => {
           });
         }
 
-        User.findOne(
+        Owner.findOne(
           {
             resetPasswordLink,
           },
-          (err, user) => {
-            if (err || !user) {
+          (err, owner) => {
+            if (err || !owner) {
               return res.status(400).json({
                 error: "Something went wrong. Try later",
               });
@@ -290,12 +290,12 @@ exports.resetPasswordController = (req, res) => {
               resetPasswordLink: "",
             };
 
-            user = _.extend(user, updatedFields);
+            owner = _.extend(owner, updatedFields);
 
-            user.save((err, result) => {
+            owner.save((err, result) => {
               if (err) {
                 return res.status(400).json({
-                  error: "Error resetting user password",
+                  error: "Error resetting Owner password",
                 });
               }
               res.json({

@@ -1,14 +1,20 @@
 // requiring packages
 const express = require("express");
 const http = require("http");
-const morgran = require("morgan");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);
+app.use(cors({ origin: "http://localhost:3000" }));
+
+//use of body parser for Parsing the input requests data
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 // DB Connection
 const uri = process.env.MONGODB_URI;
@@ -24,14 +30,12 @@ connection.once("open", () => {
 });
 
 const router = require('./Router/router');
-const authUserRouter = require('./Router/authUser/auth');
-const authOwnerRouter = require('./Router/authOwner/auth');
+const authRouter = require('./Router/auth/auth');
 
 app.use(router);
 
 //for authentication routes 
-app.get("/apiUser/", authUserRouter);
-app.get("/apiOwner/", authOwnerRouter);
+app.use("/api/", authRouter);
 
 const PORT = process.env.PORT || 5000;
 

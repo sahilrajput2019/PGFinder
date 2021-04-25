@@ -1,6 +1,7 @@
 const express = require("express");
 const Pg = require("../Models/pg.model");
 const router = express.Router();
+const Owner = require("../Models/owner.model");
 
 // api to get all the Pg's
 router.get("/findPg", async (req, res) => {
@@ -31,5 +32,18 @@ router.patch("updatePg/:id", (req, res) =>{
   })
   .catch((err) => res.status(404).json({message : err}));
 });
+
+router.get("/users", (req, res) => {
+  Owner.find({})
+  .then((users) => res.status(200).json(users))
+  .catch((err) => res.status(404).json({message : err}));
+});
+
+router.delete("/users/:id", (req, res) => {
+  Owner.findByIdAndDelete(req.params.id)
+  .then(() => res.status(200).json({message : "Deleted"}))
+  .catch((err) => res.status(404).json({message : err}));
+});
+
 
 module.exports = router;
