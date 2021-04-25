@@ -1,18 +1,20 @@
 import React, { Fragment } from "react";
-import {Route, Switch } from "react-router-dom";
-import Main from "./Components/layout/Main";
+import { Route, Switch } from "react-router-dom";
+import Navigation from "./Components/layout/Navigation";
+import Body from "./Components/layout/Body";
 import Register from "./Components/AuthScreens/Register";
 import Activate from "./Components/AuthScreens/Activate";
 import Login from "./Components/AuthScreens/Login";
 import ForgotPassword from "./Components/AuthScreens/ForgotPassword";
 import Reset from "./Components/AuthScreens/Reset";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <React.Fragment>
+      <Navigation />
       <Switch>
-        <Route exact path="/" component={Main} />
+        <Route exact path="/" component={Body} />
         <Route path="/register" component={Register} />
         <Route path="/users/activate/:token" component={Activate} />
         <Route path="/login" component={Login} />

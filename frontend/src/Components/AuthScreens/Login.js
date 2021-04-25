@@ -65,7 +65,6 @@ const Login = ({ history }) => {
     console.log(process.env.REACT_APP_API_URL);
     e.preventDefault();
     if (email && password1) {
-      console.log(`${process.env.REACT_APP_API_URL}/login`);
       setFormData({ ...formData });
       axios
         .post(`${process.env.REACT_APP_API_URL}/login`, {
