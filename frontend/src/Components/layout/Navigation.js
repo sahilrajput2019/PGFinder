@@ -88,8 +88,9 @@ export default function Navigation() {
 
   //To be changed according to profile of Particular user
   const handleProfile = () => {
+    const id = isAuth()._id;
     setAnchorEl(null);
-    history.push("/profile");
+    history.push("/profile/" + id);
   };
 
   const handleLogout = () => {

@@ -55,7 +55,6 @@ export const isAuth = () => {
         const cookieChecked = getCookie('token');
         if (cookieChecked) {
             if (localStorage.getItem('user')) {
-                console.log("Info in LocalStorage", localStorage.getItem('user'));
                 return JSON.parse(localStorage.getItem('user'));
             } else {
                 return false;

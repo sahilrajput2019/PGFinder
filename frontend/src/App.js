@@ -7,6 +7,7 @@ import Activate from "./Components/AuthScreens/Activate";
 import Login from "./Components/AuthScreens/Login";
 import ForgotPassword from "./Components/AuthScreens/ForgotPassword";
 import Reset from "./Components/AuthScreens/Reset";
+import Profile from "./Components/Profile";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/login" component={Login} />
         <Route path="/users/password/forget" component={ForgotPassword} />
         <Route path="/users/password/reset/:token" component={Reset} />
+        <Route path="/profile/:id" component={Profile} />
       </Switch>
     </React.Fragment>
   );
