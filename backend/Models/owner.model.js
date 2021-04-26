@@ -23,13 +23,6 @@ const OwnerSchema = mongoose.Schema({
     data: String,
     default: "",
   },
-  pgs: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Pg",
-      index: true,
-    },
-  ],
 });
 
 OwnerSchema.virtual("password")

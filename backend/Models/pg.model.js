@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const PgSchema = mongoose.Schema({
   city: {
@@ -7,6 +7,14 @@ const PgSchema = mongoose.Schema({
   },
   state: {
     type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  contactNumber: {
+    type: Number,
     required: true,
   },
   rooms: {
@@ -25,16 +33,9 @@ const PgSchema = mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  timings: {
+  authorId: {
     type: String,
     required: true,
-  },
-  author: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Owner",
-    },
-    username: String,
   },
 });
 
