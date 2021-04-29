@@ -94,7 +94,7 @@ const Register = () => {
               password2: "",
             });
             console.log(err.response);
-            // toast.error(err.response.data.errors);
+            toast.error(err.response.data.errors);
           });
       } else {
         toast.error("Passwords don't matches");
