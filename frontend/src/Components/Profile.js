@@ -15,7 +15,7 @@ const Profile = () => {
     rooms: 0,
     food: false,
     ac: false,
-    bedsize: false,
+    price: 0,
     contactNumber: 0,
     authorId: id,
   });
@@ -29,7 +29,7 @@ const Profile = () => {
     rooms,
     ac,
     food,
-    bedsize,
+    price,
     authorId,
   } = formData;
 
@@ -48,7 +48,7 @@ const Profile = () => {
       rooms: +rooms,
       ac: Boolean(ac),
       food: Boolean(food),
-      multipleBedSize: Boolean(bedsize),
+      price: +price,
       authorId: isAuth()._id,
     };
 
@@ -64,7 +64,7 @@ const Profile = () => {
           rooms: +"",
           ac: false,
           food: false,
-          multipleBedSize: false,
+          price: 0,
           authorId: id,
         });
         //to display toast notification
@@ -83,7 +83,7 @@ const Profile = () => {
           rooms: +"",
           ac: false,
           food: false,
-          multipleBedSize: false,
+          price: 0,
           authorId: id,
         });
         toast.error("Something Went Wrong");
@@ -95,7 +95,6 @@ const Profile = () => {
       .get("http://localhost:5000/getOwnerPg/" + id)
       .then((result) => {
         setPgs(result.data);
-        console.log(result.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -219,22 +218,18 @@ const Profile = () => {
 
                   <div className="row">
                     <div className="col-md-6">
-                      <label>Multiple Bed Sizes</label>
+                      <label>Price</label>
                       <div className="form-group">
-                        <select
-                          required={true}
-                          className="custom-select"
-                          value={bedsize}
+                        <input
+                          type="Number"
+                          min="0"
+                          className="form-control"
+                          placeholder="Price"
+                          value={price}
                           required
                           // calling handle change on changing
-                          onChange={handleChange("bedsize")}
-                        >
-                          <option value="" disabled defaultValue>
-                            Select option
-                          </option>
-                          <option value="true">Yes</option>
-                          <option value="false">No</option>
-                        </select>
+                          onChange={handleChange("price")}
+                        />
                       </div>
                     </div>
                     <div className="col-md-6">
@@ -278,7 +273,6 @@ const Profile = () => {
           <div className="row row-cols-2 row-cols-xs-12 row-col-sm-12 row-cols-lg-3">
             {pgs.map((pg, key) => (
               <div className="col-12 col-sm-6 col-lg-5" key={pg.id}>
-                {/* Rendring MemeCard component on each meme value */}
                 <PGCard
                   id={pg._id}
                   city={pg.city}
@@ -288,7 +282,7 @@ const Profile = () => {
                   rooms={pg.rooms}
                   ac={pg.ac}
                   food={pg.food}
-                  multipleBedSize={pg.multipleBedSize}
+                  price={pg.price}
                   pgs={pgs}
                   setPgs={setPgs}
                 />

@@ -29,8 +29,8 @@ const PgSchema = mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  multipleBedSize: {
-    type: Boolean,
+  price: {
+    type: Number,
     required: true,
   },
   authorId: {

@@ -2,10 +2,14 @@ const express = require("express");
 const Pg = require("../Models/pg.model");
 const router = express.Router();
 const Owner = require("../Models/owner.model");
+const url = require('url');
 
 // api to get all the Pg's
 router.get("/findPg", async (req, res) => {
-  await Pg.find({city: req.body.city})
+  const queryObject = url.parse(req.url,true).query;
+  const value = queryObject.city;
+  
+  await Pg.find({city: value})
     .then((pgs) => res.status(200).json(pgs))
     .catch((err) => res.status(404).json({ message: err }));
 });
@@ -28,6 +32,7 @@ router.patch("/updatePg/:id", async (req, res) => {
     .then((pg) => {
       pg.rooms = req.body.rooms;
       pg.contactNumber = req.body.contactNumber;
+      pg.price = req.body.price;
       pg.save()
         .then(() => res.status(200).json())
         .catch((err) => res.status(400).json({ message: err }));

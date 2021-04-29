@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles, useTheme, fade } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
@@ -15,6 +15,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import InputBase from '@material-ui/core/InputBase';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,12 +72,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navigation() {
+export default function Navigation({location}) {
   const classes = useStyles();
   const history = useHistory();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const anchorOpen = Boolean(anchorEl);
+  const [city, setCity] = useState('');
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -97,6 +99,18 @@ export default function Navigation() {
     signout();
     setAnchorEl(null);
     history.push("/");
+  };
+  
+  const handleChange = (event) => {
+    setCity(event.target.value);
+  }
+
+  const handleKeyDown = (event) => {
+    if(event.key === 'Enter'){
+      history.push("/rentalpgs?city=" + city);
+      window.location.reload();
+      setCity("");
+    }
   };
 
   return (
@@ -123,6 +137,9 @@ export default function Navigation() {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              value={city}
+              onKeyDown={handleKeyDown}
+              onChange={handleChange}
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>

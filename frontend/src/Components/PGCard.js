@@ -13,13 +13,14 @@ const PGCard = ({
   rooms,
   ac,
   food,
-  multipleBedSize,
+  price,
   pgs,
   setPgs,
 }) => {
   //State to manage new caption and url
   const [newRooms, setNewRooms] = useState(rooms);
   const [newContactNo, setNewContactNo] = useState(contactNumber);
+  const [newPrice, setNewPrice] = useState(price);
   const url =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOrAHLJ_VS95EQqh7euPF0LvXnRDXL8EWYeGATlVoM6Ixo6catNAUJHz21PyyBQdVEkUQ&usqp=CAU";
   //state for hiding and showing of modals
@@ -32,6 +33,7 @@ const PGCard = ({
 
   let INFO_1 = city + "  |  " + state;
   let INFO_2 = haveAc + " | " + haveFood + " | " + " Rooms - " + newRooms;
+  let INFO_3 = "₹" + newPrice + "     |      ✆" + contactNumber;
 
   //handler functions for modals state management
   const handleClose = () => setShow(false);
@@ -60,6 +62,7 @@ const PGCard = ({
       .patch("http://localhost:5000/updatePg/" + id, {
         rooms: newRooms,
         contactNumber: newContactNo,
+        price : newPrice
       })
       .then((res) => {
         toast.success("Edited Successfully");
@@ -81,11 +84,11 @@ const PGCard = ({
           src={url}
           alt="PG"
         />
-        <ul class="list-group list-group-flush">
+        <ul className="list-group list-group-flush">
           <li className="list-group-item">{INFO_1}</li>
           <li className="list-group-item">{address}</li>
           <li className="list-group-item">{INFO_2}</li>
-          <li className="list-group-item">{contactNumber}</li>
+          <li className="list-group-item">{INFO_3}</li>
         </ul>
         <div>
           {/* Button to trigger Modal */}
@@ -125,6 +128,16 @@ const PGCard = ({
                   // on changing the value update the state
                   onChange={(e) => setNewContactNo(e.target.value)}
                   placeholder="Enter Contact Number"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Update Price</Form.Label>
+                <Form.Control
+                  type="Number"
+                  value={newPrice}
+                  // on changing the value update the state
+                  onChange={(e) => setNewPrice(e.target.value)}
+                  placeholder="Enter New Price"
                 />
               </Form.Group>
             </Modal.Body>

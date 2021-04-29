@@ -8,6 +8,7 @@ import Login from "./Components/AuthScreens/Login";
 import ForgotPassword from "./Components/AuthScreens/ForgotPassword";
 import Reset from "./Components/AuthScreens/Reset";
 import Profile from "./Components/Profile";
+import RentalPg from "./Components/RentalPg";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/users/password/forget" component={ForgotPassword} />
         <Route path="/users/password/reset/:token" component={Reset} />
         <Route path="/profile/:id" component={Profile} />
+        <Route path="/rentalpgs" component={RentalPg} />
       </Switch>
     </React.Fragment>
   );
