@@ -26,17 +26,7 @@ const RentalPg = ({ location }) => {
     <div className="row row-cols-2 row-cols-xs-12 row-col-sm-12 row-cols-lg-3">
       {pgs.map((pg, key) => (
         <div className="col-12 col-sm-6 col-lg-3" key={pg.id}>
-          <PGCardSearch
-            id={pg.id}
-            city={pg.city}
-            state={pg.state}
-            address={pg.address}
-            contactNumber={pg.contactNumber}
-            rooms={pg.rooms}
-            ac={pg.ac}
-            food={pg.food}
-            price={pg.price}
-          />
+          <PGCardSearch data={pg} />
         </div>
       ))}
     </div>

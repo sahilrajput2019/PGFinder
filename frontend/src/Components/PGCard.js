@@ -21,6 +21,9 @@ const PGCard = ({
   const [newRooms, setNewRooms] = useState(rooms);
   const [newContactNo, setNewContactNo] = useState(contactNumber);
   const [newPrice, setNewPrice] = useState(price);
+  const [newFood, setNewFood] = useState(food);
+  const [newAc, setNewAc] = useState(ac);
+
   const url =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOrAHLJ_VS95EQqh7euPF0LvXnRDXL8EWYeGATlVoM6Ixo6catNAUJHz21PyyBQdVEkUQ&usqp=CAU";
   //state for hiding and showing of modals
@@ -62,7 +65,9 @@ const PGCard = ({
       .patch("http://localhost:5000/updatePg/" + id, {
         rooms: newRooms,
         contactNumber: newContactNo,
-        price : newPrice
+        price: newPrice,
+        food: newFood,
+        ac: newAc,
       })
       .then((res) => {
         toast.success("Edited Successfully");
@@ -139,6 +144,32 @@ const PGCard = ({
                   onChange={(e) => setNewPrice(e.target.value)}
                   placeholder="Enter New Price"
                 />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Update Food Facility</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={newFood}
+                  required={true}
+                  onChange={(e) => setNewFood(e.target.value)}
+                >
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Update AC Facility</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={newAc}
+                  required={true}
+                  onChange={(e) => setNewAc(e.target.value)}
+                >
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </Form.Control>
               </Form.Group>
             </Modal.Body>
             <Modal.Footer>
