@@ -53,7 +53,7 @@ const Profile = () => {
     };
 
     axios
-      .post("https://pg-finder-2021.herokuapp.com/addPg", result)
+      .post("http://localhost:5000/addPg", result)
       .then((res) => {
         setFormData({
           ...formData,
@@ -92,7 +92,7 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get("https://pg-finder-2021.herokuapp.com/getOwnerPg/" + id)
+      .get("http://localhost:5000/getOwnerPg/" + id)
       .then((result) => {
         setPgs(result.data);
       })

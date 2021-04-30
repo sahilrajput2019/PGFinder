@@ -9,7 +9,7 @@ require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: process.env.CLIENT_URL }));
 
 //use of body parser for Parsing the input requests data
 app.use(bodyParser.urlencoded({ extended: true }));

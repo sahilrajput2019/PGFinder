@@ -46,7 +46,7 @@ const PGCard = ({
   const handleDelete = (id) => {
     //delete request for that specific id
     axios
-      .delete("https://pg-finder-2021.herokuapp.com/deletepg/" + id)
+      .delete("http://localhost:5000/deletepg/" + id)
       .then(() => window.location.reload())
       .catch((err) => console.log(err));
 
@@ -62,7 +62,7 @@ const PGCard = ({
   const handleEdit = (id) => {
     //patch requst to our api
     axios
-      .patch("https://pg-finder-2021.herokuapp.com/ssupdatePg/" + id, {
+      .patch("http://localhost:5000/updatePg/" + id, {
         rooms: newRooms,
         contactNumber: newContactNo,
         price: newPrice,

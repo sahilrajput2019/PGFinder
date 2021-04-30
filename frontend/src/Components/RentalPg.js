@@ -10,7 +10,7 @@ const RentalPg = ({ location }) => {
   const CITY = value.toLowerCase();
   useEffect(() => {
     axios
-      .get("https://pg-finder-2021.herokuapp.com/findPg?city=" + CITY)
+      .get("http://localhost:5000/findPg?city=" + CITY)
       .then((response) => setPgs(response.data))
       .catch((err) => console.error(err));
   }, []);
