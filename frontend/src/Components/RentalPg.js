@@ -7,10 +7,10 @@ import "./PGCard.css";
 const RentalPg = ({ location }) => {
   const value = queryString.parse(location.search).city;
   const [pgs, setPgs] = useState([]);
-
+  const CITY = value.toLowerCase();
   useEffect(() => {
     axios
-      .get("http://localhost:5000/findPg?city=" + value)
+      .get("http://localhost:5000/findPg?city=" + CITY)
       .then((response) => setPgs(response.data))
       .catch((err) => console.error(err));
   }, []);

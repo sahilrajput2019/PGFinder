@@ -41,7 +41,7 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const result = {
-      city,
+      city : city.toLowerCase(),
       state,
       address,
       contactNumber: +contactNumber,
