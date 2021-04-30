@@ -154,8 +154,7 @@ exports.loginController = (req, res) => {
         }
       );
       const { _id, name, email } = user;
-      console.log("1) ", user);
-      console.log("2) ", name, email);
+      
       return res.json({
         token,
         user: {

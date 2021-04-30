@@ -34,7 +34,6 @@ router.get("/findPg", async (req, res) => {
 router.post("/addPg", (req, res) => {
   try {
     const pg = new Pg({ ...req.body });
-    console.log(pg);
     pg.save();
     res.status(200).json({ id: pg._id });
   } catch (err) {
@@ -49,6 +48,8 @@ router.patch("/updatePg/:id", async (req, res) => {
       pg.rooms = req.body.rooms;
       pg.contactNumber = req.body.contactNumber;
       pg.price = req.body.price;
+      pg.food = req.body.food;
+      pg.ac = req.body.ac;
       pg.save()
         .then(() => res.status(200).json())
         .catch((err) => res.status(400).json({ message: err }));
