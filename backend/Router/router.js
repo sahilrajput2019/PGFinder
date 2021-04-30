@@ -4,6 +4,9 @@ const router = express.Router();
 const Owner = require("../Models/owner.model");
 const url = require("url");
 
+router.get("/", (req, res) => {
+  res.send("Server is Running Successfully");
+});
 // api to get all the Pg's
 router.get("/findPg", async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
