@@ -2,15 +2,31 @@ const express = require("express");
 const Pg = require("../Models/pg.model");
 const router = express.Router();
 const Owner = require("../Models/owner.model");
-const url = require('url');
+const url = require("url");
 
 // api to get all the Pg's
 router.get("/findPg", async (req, res) => {
-  const queryObject = url.parse(req.url,true).query;
+  const queryObject = url.parse(req.url, true).query;
   const value = queryObject.city;
-  
-  await Pg.find({city: value})
-    .then((pgs) => res.status(200).json(pgs))
+
+  await Pg.find({ city: value })
+    .then((pgs) => {
+      const updatedResponse = pgs.map((pg) => {
+        return {
+          _id: pg._id,
+          city: pg.city.charAt(0).toUpperCase() + pg.city.slice(1),
+          state: pg.state,
+          address: pg.address,
+          contactNumber: pg.contactNumber,
+          rooms: pg.rooms,
+          ac: pg.ac,
+          food: pg.food,
+          price: pg.price,
+          authorId: pg.authorId,
+        };
+      });
+      res.status(200).json(updatedResponse);
+    })
     .catch((err) => res.status(404).json({ message: err }));
 });
 
@@ -41,8 +57,24 @@ router.patch("/updatePg/:id", async (req, res) => {
 });
 
 router.get("/getOwnerPg/:id", async (req, res) => {
-  await Pg.find({ authorId: req.params.id  })
-    .then((pgs) => res.status(200).json(pgs))
+  await Pg.find({ authorId: req.params.id })
+    .then((pgs) => {
+      const updatedResponse = pgs.map((pg) => {
+        return {
+          _id: pg._id,
+          city: pg.city.charAt(0).toUpperCase() + pg.city.slice(1),
+          state: pg.state,
+          address: pg.address,
+          contactNumber: pg.contactNumber,
+          rooms: pg.rooms,
+          ac: pg.ac,
+          food: pg.food,
+          price: pg.price,
+          authorId: pg.authorId,
+        };
+      });
+      res.status(200).json(updatedResponse);
+    })
     .catch((err) => res.status(404).json({ message: err }));
 });
 
@@ -53,6 +85,7 @@ router.get("/users", async (req, res) => {
     .catch((err) => res.status(404).json({ message: err }));
 });
 
+// Only for Development Purpose
 router.delete("/users/:id", async (req, res) => {
   await Owner.findByIdAndDelete(req.params.id)
     .then(() => res.status(200).json({ message: "Deleted" }))
@@ -61,8 +94,8 @@ router.delete("/users/:id", async (req, res) => {
 
 router.delete("/deletepg/:id", (req, res) => {
   Pg.findByIdAndDelete(req.params.id)
-  .then(() => res.status(200).json({message : "Deleted"}))
-  .catch((err) => res.status(404).json(err));
+    .then(() => res.status(200).json({ message: "Deleted" }))
+    .catch((err) => res.status(404).json(err));
 });
 
 module.exports = router;
